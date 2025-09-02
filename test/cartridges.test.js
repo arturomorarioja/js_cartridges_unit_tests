@@ -31,12 +31,24 @@ describe('Cartridges tests', () => {
      */    
 
     const calculateDiscountFailsProvider = [
-        0, 1, 2, 3, 4,      // Invalid equivalence partition: 0-4
+        -15, -2, -1,        // Invalid equivalence partition: MIN INTEGER - -1
+        0,                  // Invalid equivalence partition: 0
+        1, 2, 3, 4,         // Invalid equivalence partition: 1-4
         -1, -10, -167       // Edge cases
     ];
     describe.each(calculateDiscountFailsProvider)('Calculate discount fails', (cartridges) => {
         it(`${cartridges} is below the minimum`, () => {
             expect(() => calculateDiscount(cartridges)).toThrow('The minimum order quantity is 5.');
+        });
+    });
+
+    const calculateDiscountPassesWrongDataTypeProvider = [
+        {'cartridges': '167', 'discount': 0.2},     // Edge case: implies string to int conversion
+        {'cartridges': '167.3', 'discount': 0.2},   // Edge case: implies string containing float to int conversion
+    ];
+    describe.each(calculateDiscountPassesWrongDataTypeProvider)('Calculate discount passes with wrong data types', (param) => {
+        it(`${param.cartridges} cartridges yield ${param.discount} discount`, () => {
+            expect(calculateDiscount(param.cartridges)).toBe(param.discount);
         });
     });
 
