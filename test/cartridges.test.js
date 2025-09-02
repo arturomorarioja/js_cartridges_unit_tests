@@ -16,9 +16,6 @@ describe('Cartridges tests', () => {
         {'cartridges': 100, 'discount': 0.2},       // Partition 100-MAX INTEGER: lower valid boundary
         {'cartridges': 101, 'discount': 0.2},
         {'cartridges': 167, 'discount': 0.2},
-        {'cartridges': 167.3, 'discount': 0.2},     // Edge case: implies float to int conversion
-        {'cartridges': '167', 'discount': 0.2},     // Edge case: implies string to int conversion
-        {'cartridges': '167.3', 'discount': 0.2},   // Edge case: implies string containing float to int conversion
     ];
     describe.each(calculateDiscountPassesProvider)('Calculate discount passes', (param) => {
         it(`${param.cartridges} cartridges yield ${param.discount} discount`, () => {
@@ -43,6 +40,7 @@ describe('Cartridges tests', () => {
     });
 
     const calculateDiscountPassesWrongDataTypeProvider = [
+        {'cartridges': 167.3, 'discount': 0.2},     // Edge case: implies float to int conversion
         {'cartridges': '167', 'discount': 0.2},     // Edge case: implies string to int conversion
         {'cartridges': '167.3', 'discount': 0.2},   // Edge case: implies string containing float to int conversion
     ];
