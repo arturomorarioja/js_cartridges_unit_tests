@@ -3,8 +3,14 @@ import { calculateDiscount } from '../cartridges/cartridges.js';
 describe('Cartridges tests', () => {
 
     /**
-     * Positive testing
+     * Black-Box test design
+     * - Equivalence partitions
+     * - Boundary values
      */
+
+    /*
+        Positive testing
+    */
 
     // Valid equivalence partitions: 5-99 and 100-MAX INTEGER
     const calculateDiscountPassesProvider = [
@@ -23,9 +29,9 @@ describe('Cartridges tests', () => {
         });
     });
 
-    /**
-     * Negative testing
-     */    
+    /*
+        Negative testing
+    */    
 
     const calculateDiscountFailsProvider = [
         -15, -2, -1,        // Invalid equivalence partition: MIN INTEGER - -1
@@ -38,6 +44,11 @@ describe('Cartridges tests', () => {
             expect(() => calculateDiscount(cartridges)).toThrow('The minimum order quantity is 5.');
         });
     });
+
+    /**
+     * Black-Box test design
+     * - Edge cases
+     */
 
     const calculateDiscountPassesWrongDataTypeProvider = [
         {'cartridges': 167.3, 'discount': 0.2},     // Edge case: implies float to int conversion
